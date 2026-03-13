@@ -14,29 +14,30 @@
       --bs-muted:   #7A7692;
       --bs-amber:   #F5A623;
       --bs-coral:   #E8623A;
+      --header-h:   68px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100%;
+      overflow: hidden;
       font-family: 'DM Sans', sans-serif;
       background: var(--bs-bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     /* ── Header ── */
     header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
       background: var(--bs-surface);
       border-bottom: 1px solid var(--bs-border);
       padding: 0 40px;
-      height: 68px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
-      position: relative;
+      z-index: 100;
     }
 
     header::after {
@@ -47,74 +48,42 @@
       background: linear-gradient(90deg, var(--bs-amber), var(--bs-coral));
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand img {
-      height: 36px;
-      display: block;
-    }
-
-    .brand-divider {
-      width: 1px;
-      height: 18px;
-      background: var(--bs-border);
-    }
-
+    .brand { display: flex; align-items: center; gap: 16px; }
+    .brand img { height: 36px; display: block; }
+    .brand-divider { width: 1px; height: 18px; background: var(--bs-border); }
     .brand-section {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 12px; font-weight: 500;
       color: var(--bs-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      letter-spacing: 1px; text-transform: uppercase;
     }
 
-    .header-jdm {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0.4;
-    }
-
+    .header-jdm { display: flex; align-items: center; opacity: 0.4; }
     .header-jdm img {
-      height: 22px;
-      display: block;
-      filter: brightness(0) invert(1);
-      opacity: 0.6;
+      height: 22px; display: block;
+      filter: brightness(0) invert(1); opacity: 0.6;
     }
 
-    /* ── Área do form ── */
-    .form-wrap {
-      flex: 1;
-      width: 100%;
-      min-height: 0;
+    /* ── Iframe ocupa EXATAMENTE o espaço abaixo do header ── */
+    #formWrap {
+      position: fixed;
+      top: var(--header-h);
+      left: 0; right: 0; bottom: 0;
     }
 
-    .form-wrap iframe {
+    #formWrap iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
 
-    /* ── Erro: sem param ── */
     .no-link {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--bs-muted);
-      font-size: 13px;
-      text-align: center;
-      padding: 40px;
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; color: var(--bs-muted);
+      font-size: 13px; text-align: center; padding: 40px;
     }
-
     .no-link span { font-size: 28px; opacity: 0.3; margin-bottom: 4px; }
 
     @media (max-width: 600px) {
@@ -126,18 +95,16 @@
 
   <header>
     <div class="brand">
-      <img src="https://janeladomundo.quickbase.com/up/bifxwwdtx/a/r60157/e9/v0"
-           alt="BaianaSystem">
+      <img src="https://janeladomundo.quickbase.com/up/bifxwwdtx/a/r60157/e9/v0" alt="BaianaSystem">
       <div class="brand-divider"></div>
       <div class="brand-section">Fornecedores</div>
     </div>
     <div class="header-jdm">
-      <img src="https://janeladomundo.quickbase.com/up/bifxwwdtx/a/r6298/e9/v0"
-           alt="Janela do Mundo">
+      <img src="https://janeladomundo.quickbase.com/up/bifxwwdtx/a/r6298/e9/v0" alt="Janela do Mundo">
     </div>
   </header>
 
-  <div class="form-wrap" id="formWrap"></div>
+  <div id="formWrap"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -148,7 +115,6 @@
       if (tf) {
         var iframe = document.createElement('iframe');
         iframe.src = decodeURIComponent(tf);
-        iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
         iframe.setAttribute('allowfullscreen', '');
         wrap.appendChild(iframe);
       } else {
