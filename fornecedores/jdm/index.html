@@ -1,5 +1,148 @@
 <!DOCTYPE html>
-<html>
-  <head><title>Janela do Mundo</title></head>
-  <body><h1>Em breve</h1></body>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fornecedores — Janela do Mundo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --jdm-bg:      #F1F5F9;
+      --jdm-surface: #3D4F52;
+      --jdm-border:  rgba(255,255,255,0.1);
+      --jdm-muted:   rgba(255,255,255,0.5);
+      --jdm-accent:  #FCB814;
+      --jdm-coral:   #F4845F;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--jdm-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--jdm-surface);
+      border-bottom: 1px solid var(--jdm-border);
+      padding: 0 40px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--jdm-accent), var(--jdm-coral));
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand img {
+      height: 36px;
+      display: block;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--jdm-border);
+    }
+
+    .brand-section {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--jdm-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── Área do form ── */
+    .form-wrap {
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+    }
+
+    .form-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── Erro: sem param ── */
+    .no-link {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #94A3B8;
+      font-size: 13px;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .no-link span { font-size: 28px; opacity: 0.3; margin-bottom: 4px; }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="https://janeladomundo.quickbase.com/up/bifxwwdtx/a/r6298/e9/v0"
+           alt="Janela do Mundo">
+      <div class="brand-divider"></div>
+      <div class="brand-section">Fornecedores</div>
+    </div>
+  </header>
+
+  <div class="form-wrap" id="formWrap"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var params = new URLSearchParams(window.location.search);
+      var tf = params.get('tf');
+      var wrap = document.getElementById('formWrap');
+
+      if (tf) {
+        var iframe = document.createElement('iframe');
+        iframe.src = decodeURIComponent(tf);
+        iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+        iframe.setAttribute('allowfullscreen', '');
+        wrap.appendChild(iframe);
+      } else {
+        wrap.innerHTML =
+          '<div class="no-link">' +
+          '<span>📋</span>' +
+          '<p>Link de cadastro não encontrado.<br>Verifique o link recebido por email.</p>' +
+          '</div>';
+      }
+    });
+  </script>
+
+</body>
 </html>
+
